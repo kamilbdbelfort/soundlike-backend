@@ -10,8 +10,12 @@ const Category = require("../models").category;
 
 // GET Popular sounds, order by highest 'played'
 router.get("/popular", async (req, res, next) => {
+  const limit = req.query.limit || 5;
+  const offset = req.query.offset || 0;
   try {
     const popularSounds = await Sound.findAll({
+      limit,
+      offset,
       order: [["played", "DESC"]],
     });
     res.status(200).send(popularSounds);
@@ -22,8 +26,12 @@ router.get("/popular", async (req, res, next) => {
 
 // GET Newest sounds, order by 'createdAt'
 router.get("/", async (req, res, next) => {
+  const limit = req.query.limit || 5;
+  const offset = req.query.offset || 0;
   try {
     const newestSounds = await Sound.findAll({
+      limit,
+      offset,
       order: [["createdAt", "ASC"]],
     });
     res.status(200).send(newestSounds);
@@ -34,6 +42,8 @@ router.get("/", async (req, res, next) => {
 
 // GET Search sounds by text
 router.get("/search/:text", async (req, res, next) => {
+  const limit = req.query.limit || 5;
+  const offset = req.query.offset || 0;
   const searchText = req.params.text;
   console.log("search text: ", searchText);
   if (!searchText) {
@@ -41,6 +51,8 @@ router.get("/search/:text", async (req, res, next) => {
   }
   try {
     const searchSounds = await Sound.findAll({
+      limit,
+      offset,
       // put them all to lowercase using Sequelize.fn "lower"
       where: {
         [Op.or]: [
@@ -65,12 +77,16 @@ router.get("/search/:text", async (req, res, next) => {
 
 // GET all sounds of a given category
 router.get("/category/:id", async (req, res, next) => {
+  const limit = req.query.limit || 5;
+  const offset = req.query.offset || 0;
   const categoryId = parseInt(req.params.id);
   if (!categoryId) {
     return res.status(400).send("Category ID hasn't been found");
   }
   try {
     const categorySounds = await Category.findAll({
+      limit,
+      offset,
       include: [{ model: Sound }],
       where: { id: categoryId },
     });
