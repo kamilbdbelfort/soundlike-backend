@@ -111,7 +111,7 @@ module.exports = {
             "https://res.cloudinary.com/sound-like/video/upload/v1634741037/mixkit-futuristic-engine-sounds-2738_hgwsrl.wav",
           imageURL:
             "https://res.cloudinary.com/sound-like/image/upload/v1634741037/mixkit-futuristic-engine-sounds-2738_lwpy7c.gif",
-          played: 0,
+          played: 4,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -144,7 +144,7 @@ module.exports = {
             "https://res.cloudinary.com/sound-like/video/upload/v1634741036/mixkit-cartoon-voice-laugh-343_v0br5m.wav",
           imageURL:
             "https://res.cloudinary.com/sound-like/image/upload/v1634741037/mixkit-cartoon-voice-laugh-343_eh56km.gif",
-          played: 0,
+          played: 9,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -177,7 +177,7 @@ module.exports = {
             "https://res.cloudinary.com/sound-like/video/upload/v1634740913/Terminator_I_ll_Be_Back_Sound_Effect_bvmxft.mp3",
           imageURL:
             "https://res.cloudinary.com/sound-like/image/upload/v1634740914/terminator-ill-be-back_jdx5ux.gif",
-          played: 0,
+          played: 12,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -210,7 +210,7 @@ module.exports = {
             "https://res.cloudinary.com/sound-like/video/upload/v1634740896/Chewbacca-arrr_p26hrn.mp3",
           imageURL:
             "https://res.cloudinary.com/sound-like/image/upload/v1634740896/chewbacca-arrr_fbntw4.gif",
-          played: 0,
+          played: 20,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

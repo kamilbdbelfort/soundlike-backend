@@ -1,11 +1,15 @@
-// index.js
-
+// index.jss
 const express = require("express");
 const app = express();
 
+// Middlewares
+
+const corsMiddleWare = require("cors");
+app.use(corsMiddleWare());
+
 // Define routers
 const SoundRouter = require("./routers/soundRouter");
-const CategoryRouter = require("./routers/soundRouter");
+const CategoryRouter = require("./routers/categoryRouter");
 
 // Use routers
 app.use("/", SoundRouter);

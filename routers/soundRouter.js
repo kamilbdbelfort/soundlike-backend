@@ -11,7 +11,9 @@ const Category = require("../models").category;
 // GET Popular sounds, order by highest 'played'
 router.get("/popular", async (req, res, next) => {
   try {
-    const popularSounds = await Sound.find().orderby({ played: 1 }); // played: 1 returns ascending order; played:-1 returns descending order
+    const popularSounds = await Sound.findAll({
+      order: [["played", "DESC"]],
+    });
     res.status(200).send(popularSounds);
   } catch (e) {
     next(e.message);
@@ -21,31 +23,39 @@ router.get("/popular", async (req, res, next) => {
 // GET Newest sounds, order by 'createdAt'
 router.get("/", async (req, res, next) => {
   try {
-    const newestSounds = await Sound.find().orderby({ createdAt: -1 }); // createdAt: -1 orders by smallest date value first aka newest
-    res.status(200).send(popularSounds);
+    const newestSounds = await Sound.findAll({
+      order: [["createdAt", "ASC"]],
+    });
+    res.status(200).send(newestSounds);
   } catch (e) {
     next(e.message);
   }
 });
 
-// GET Search sounds by name
-router.get("/search/:name", async (req, res, next) => {
-  const searchName = Sequelize.fn(toString(req.params.name));
-  if (!searchName) {
+// GET Search sounds by text
+router.get("/search/:text", async (req, res, next) => {
+  const searchText = req.params.text;
+  console.log("search text: ", searchText);
+  if (!searchText) {
     return res.status(400).send("Please type in a search value!");
   }
   try {
     const searchSounds = await Sound.findAll({
       // put them all to lowercase using Sequelize.fn "lower"
-      where: Sequelize.where(
-        Sequelize.fn("lower", Sequelize.col("name")),
-        Sequelize.fn("lower", `${searchName}`)
-      ),
-      // {
-      //     name: {
-      //         [Op.like]: `%${searchName}`
-      //     }
-      // }
+      where: {
+        [Op.or]: [
+          {
+            name: {
+              [Op.iLike]: `%${searchText}%`,
+            },
+          },
+          {
+            description: {
+              [Op.iLike]: `%${searchText}%`,
+            },
+          },
+        ],
+      },
     });
     res.status(200).send(searchSounds);
   } catch (e) {
@@ -60,11 +70,9 @@ router.get("/category/:id", async (req, res, next) => {
     return res.status(400).send("Category ID hasn't been found");
   }
   try {
-    const categorySounds = await Sound.finaAll({
-      include: [Category],
-      where: {
-        categoryId: categoryId,
-      },
+    const categorySounds = await Category.findAll({
+      include: [{ model: Sound }],
+      where: { id: categoryId },
     });
     res.status(200).send(categorySounds);
   } catch (e) {
