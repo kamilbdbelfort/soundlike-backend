@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       sound.belongsToMany(models.category, {
-        through: "soundCategory",
+        through: "soundCategories",
         foreignKey: "soundId",
       }); // define association here
     }
