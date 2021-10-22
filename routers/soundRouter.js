@@ -32,7 +32,7 @@ router.get("/", async (req, res, next) => {
     const newestSounds = await Sound.findAll({
       limit,
       offset,
-      order: [["createdAt", "ASC"]],
+      order: [["createdAt", "DESC"]],
     });
     res.status(200).send(newestSounds);
   } catch (e) {
