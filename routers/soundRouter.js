@@ -96,4 +96,24 @@ router.get("/category/:id", async (req, res, next) => {
   }
 });
 
+// PATCH once a sound is played update the 'played' column of the given record
+router.patch("/:soundId", async (req, res, next) => {
+  const soundId = parseInt(req.params.soundId);
+  if (!soundId) {
+    res.status(400).send("Sound id doens't exist");
+  }
+  try {
+    const findSound = await Sound.findOne({
+      where: { id: soundId },
+    });
+
+    const oldPlayed = findSound.played;
+
+    const updateSound = await findSound.update({ played: oldPlayed + 1 });
+    res.status(200).send(updateSound);
+  } catch (e) {
+    next(e.message);
+  }
+});
+
 module.exports = router;
